@@ -1,10 +1,9 @@
 ﻿using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
 
 namespace SimpleToDoList;
 
-sealed class Program
+internal sealed class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -18,6 +17,5 @@ sealed class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace()
-            .UseReactiveUI();
+            .LogToTrace();
 }
