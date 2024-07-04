@@ -39,4 +39,15 @@ public partial class MainWindowViewModel : ViewModelBase
         // reset the NewItemContent
         NewItemContent = null;
     }
+
+    /// <summary>
+    /// Removes the given Item from the list
+    /// </summary>
+    /// <param name="item">the item to remove</param>
+    [RelayCommand]
+    private void RemoveItem(ToDoItemViewModel item)
+    {
+        // Remove the given item from the list
+        ToDoItems.Remove(item);
+    }
 }
