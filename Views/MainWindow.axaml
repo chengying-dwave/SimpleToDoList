@@ -9,12 +9,21 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="SimpleToDoList">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+    <!--  We give a name to the root grid in order to access it later  -->
+    <Grid x:Name="Root" RowDefinitions="Auto, *, Auto">
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--  This is our title text block.  -->
+        <TextBlock Text="My ToDo-List" />
 
+        <ScrollViewer Grid.Row="1">
+            <!--  This ItemsControl show all added ToDoItems.  -->
+            <!--  It needs to be placed inside a ScrollViewer because other than a ListBox it has not its own  -->
+            <ItemsControl ItemsSource="{Binding ToDoItems}" />
+        </ScrollViewer>
+
+        <!--  This TextBox can be used to add new ToDoItems  -->
+        <TextBox Grid.Row="2"
+                 Text="{Binding NewItemContent}"
+                 Watermark="Add a new Item" />
+    </Grid>
 </Window>
