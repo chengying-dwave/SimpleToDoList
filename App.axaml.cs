@@ -8,6 +8,10 @@ namespace SimpleToDoList;
 
 public partial class App : Application
 {
+    // This is a reference to our MainViewModel which we use to save the list on shutdown. You can also use Dependency Injection
+    // in your App.
+    private readonly MainWindowViewModel _mainWindowViewModel = new MainWindowViewModel();
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -19,7 +23,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = _mainWindowViewModel, // Remember to change this line to use our private reference to the MainViewModel
             };
         }
 
