@@ -45,8 +45,7 @@
                  Watermark="Add a new Item">
             <TextBox.InnerRightContent>
                 <Button Command="{Binding AddItemCommand}">
-                    Add
-                    <!-- <PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" /> -->
+                    <PathIcon Data="{DynamicResource AcceptIconData}" Foreground="Green" />
                 </Button>
             </TextBox.InnerRightContent>
             <TextBox.KeyBindings>
