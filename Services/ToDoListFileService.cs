@@ -29,4 +29,25 @@ public static class ToDoListFileService
             await JsonSerializer.SerializeAsync(fs, itemsToSave);
         }
     }
+
+    /// <summary>
+    /// Loads the file from disc and returns the items stores inside
+    /// </summary>
+    /// <returns>An IEnumerable of items loaded or null in case the files was not found</returns>
+    public static async Task<IEnumerable<ToDoItem>?> LoadFromFileAsync()
+    {
+        try
+        {
+            // We try read the saved file and return the ToDoItemList if successful
+            using (var fs = File.OpenRead(_jsonFileName))
+            {
+                return await JsonSerializer.DeserializeAsync<IEnumerable<ToDoItem>>(fs);
+            }
+        }
+        catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
+        {
+            // In case the  file was not found, we simply return null
+            return null;
+        }
+    }
 }

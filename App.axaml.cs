@@ -5,6 +5,7 @@ using SimpleToDoList.Services;
 using SimpleToDoList.ViewModels;
 using SimpleToDoList.Views;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleToDoList;
 
@@ -21,7 +22,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -35,6 +36,9 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+
+        // Init the MainWindowViewModel
+        await InitMainWindowViewModelAsync();
     }
 
     // We want to save our ToDoList before we actually shutdown the App. As File I/O is async, we need to wait until file is closed
@@ -54,6 +58,21 @@ public partial class App : Application
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.Shutdown();
+            }
+        }
+    }
+
+    // Optional: Load data from disc
+    private async Task InitMainWindowViewModelAsync()
+    {
+        // get the items to load
+        var itemsLoaded = await ToDoListFileService.LoadFromFileAsync();
+
+        if (itemsLoaded is not null)
+        {
+            foreach (var item in itemsLoaded)
+            {
+                _mainWindowViewModel.ToDoItems.Add(new ToDoItemViewModel(item));
             }
         }
     }
